@@ -104,31 +104,31 @@ services:
             network:
         ports:
           - 5044:5044
-    filebeat:
-      container_name: filebeat
-      depends_on:
-        elasticsearch:
-          condition: service_healthy
-      image: docker.elastic.co/beats/filebeat:${ELK_VERSION:-7.17.20}
-      restart: ${RESTART_MODE:-unless-stopped}
-      volumes:
-        - filebeatdata01:/usr/share/filebeat/data
-#        - "./filebeat_ingest_data/:/usr/share/filebeat/ingest_data/"
-        - "${PWD}/containers-data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
-        - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
-        - "/var/run/docker.sock:/var/run/docker.sock:ro"
-        - ${PWD}/containers-data/filebeat/netflow.yml:/usr/share/filebeat/modules.d/netflow.yml
-        - ${PWD}/containers-data/filebeat/entrypoint.sh:/usr/local/bin/entrypoint.sh
-      healthcheck:
-            interval: 10s
-            timeout: 1s
-            retries: 5
-            start_period: 5m
-      ports:
-        - 2055:2055/udp
-      networks:
-            network:
-      command: ["filebeat", "-e", "-strict.perms=false", "-c", "/usr/share/filebeat/filebeat.yml"]
+#     filebeat:
+#       container_name: filebeat
+#       depends_on:
+#         elasticsearch:
+#           condition: service_healthy
+#       image: docker.elastic.co/beats/filebeat:${ELK_VERSION:-7.17.20}
+#       restart: ${RESTART_MODE:-unless-stopped}
+#       volumes:
+#         - filebeatdata01:/usr/share/filebeat/data
+# #        - "./filebeat_ingest_data/:/usr/share/filebeat/ingest_data/"
+#         - "${PWD}/containers-data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+#         - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+#         - "/var/run/docker.sock:/var/run/docker.sock:ro"
+#         - ${PWD}/containers-data/filebeat/netflow.yml:/usr/share/filebeat/modules.d/netflow.yml
+#         - ${PWD}/containers-data/filebeat/entrypoint.sh:/usr/local/bin/entrypoint.sh
+#       healthcheck:
+#             interval: 10s
+#             timeout: 1s
+#             retries: 5
+#             start_period: 5m
+#       ports:
+#         - 2055:2055/udp
+#       networks:
+#             network:
+#       command: ["filebeat", "-e", "-strict.perms=false", "-c", "/usr/share/filebeat/filebeat.yml"]
 
     suricata:
         container_name: suricata
