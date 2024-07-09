@@ -1,0 +1,40 @@
+filebeat.inputs:
+- type: filestream
+  id: default-filestream
+  paths:
+    - ingest_data/*.log
+
+      #filebeat.modules:
+      #- module: netflow
+      #  log:
+      #    enabled: true
+      #    var:
+      #      netflow_host: 0.0.0.0
+      # curl -v logstash:      netflow_port: 2055
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+filebeat.config.modules:
+  path: /usr/share/filebeat/modules.d/*.yml
+  reload.enabled: false
+
+processors:
+- add_docker_metadata: ~
+
+setup.kibana:
+  #  host: ${KIBANA_HOSTS}
+  #  username: ${ELASTIC_USER}
+  #  password: ${ELASTIC_PASSWORD}
+
+output.logstash:
+  hosts: ["logstash:9600"]
+
+    #output.elasticsearch:
+  #  hosts: elasticsearch:9200
+    #  username: ${ELASTIC_USER}
+    #  password: ${ELASTIC_PASSWORD}
+    #  ssl.enabled: true
+    #  ssl.certificate_authorities: "certs/ca/ca.crt"
