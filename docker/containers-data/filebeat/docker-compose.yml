@@ -3,7 +3,7 @@ version: '3'
 services:
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.17.2
-    user: root
+    restart: ${RESTART_MODE:-unless-stopped}
     volumes:
       - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
