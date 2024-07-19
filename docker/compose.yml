@@ -37,7 +37,7 @@ volumes:
     arkime-pcap:
     arkime-config:
     db-data:
-    filebeatdata01:
+    # filebeatdata01:
 
 services:
     elasticsearch:
